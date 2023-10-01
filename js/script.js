@@ -99,6 +99,10 @@ class ImgSlider {
   }
 
   async mup(e) {
+    this.eImgs.forEach((eImg) => {
+      eImg.style.transitionDuration = "1s";
+    });
+
     document.body.removeEventListener("mouseup", this.mupBind, false);
     document.body.removeEventListener("touchend", this.mupBind, false);
     document.body.removeEventListener("mousemove", this.mmoveBind, false);
@@ -108,19 +112,19 @@ class ImgSlider {
       var event = e.changedTouches[0];
     }
 
-    this.eImgs.forEach((eImg) => {
-      eImg.style.removeProperty("left");
-      eImg.style.transitionDuration = null;
-    });
-
     this.x1 = event.pageX;
     this.selectNearestImg();
 
     this.element.addEventListener("mousedown", this.mdownBind, false);
     this.element.addEventListener("touchstart", this.mdownBind, false);
 
+    this.eImgs.forEach((eImg) => {
+      eImg.style.removeProperty("left");
+      eImg.style.transitionDuration = null;
+    });
     this.activeFlag = false;
   }
+
   async selectNearestImg() {
     this.mouseOffset = this.x1 - this.x0;
     this.offsetPerscent = this.mouseOffset / this.element.offsetWidth;
